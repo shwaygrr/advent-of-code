@@ -8,7 +8,10 @@ import (
 	"strings"
 )
 
-func getFileLines(file_name string) []string {
+func getListFromFile(file_name string) ([]int, []int) {
+	var left_arr []int
+	var right_arr []int
+
 	//get file data as array of strings where each string represents a line in the text file
 	data, err := os.ReadFile(file_name)
 	if err != nil {
@@ -17,28 +20,6 @@ func getFileLines(file_name string) []string {
 
 	// fmt.Printf("%q", data)
 	data_arr := strings.Split(string(data), "\r\n")
-	return data_arr
-}
-
-func sumOfDifferences(arr1 []int, arr2 []int) int {
-	total := 0
-	for i := range arr1 {
-		diff := arr1[i] - arr2[i]
-
-		if diff < 0 {
-			diff *= -1
-		}
-
-		total += diff
-	}
-	return total
-}
-
-func calcTotalDistance() int {
-	var left_arr []int
-	var right_arr []int
-
-	data_arr := getFileLines("input.txt")
 
 	// assign values
 	for _, pair := range data_arr {
@@ -58,6 +39,27 @@ func calcTotalDistance() int {
 		right_arr = append(right_arr, right_item)
 	}
 
+	return left_arr, right_arr
+}
+
+func sumOfDifferences(arr1 []int, arr2 []int) int {
+	total := 0
+	for i := range arr1 {
+		diff := arr1[i] - arr2[i]
+
+		if diff < 0 {
+			diff *= -1
+		}
+
+		total += diff
+	}
+	return total
+}
+
+func calcTotalDistance() int {
+
+	left_arr, right_arr := getListFromFile("input.txt")
+
 	//sort splices
 	sort.Ints(left_arr)
 	sort.Ints(right_arr)
@@ -67,7 +69,10 @@ func calcTotalDistance() int {
 }
 
 func main() {
-	// Puzzle 1
+	// puzzle 1
 	total_distance := calcTotalDistance()
 	fmt.Println("Total:", total_distance)
+
+	// puzzle 2
+
 }
