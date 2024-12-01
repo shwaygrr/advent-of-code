@@ -20,7 +20,21 @@ func getFileLines(file_name string) []string {
 	return data_arr
 }
 
-func main() {
+func sumOfDifferences(arr1 []int, arr2 []int) int {
+	total := 0
+	for i := range arr1 {
+		diff := arr1[i] - arr2[i]
+
+		if diff < 0 {
+			diff *= -1
+		}
+
+		total += diff
+	}
+	return total
+}
+
+func calcTotalDistance() int {
 	var left_arr []int
 	var right_arr []int
 
@@ -49,16 +63,11 @@ func main() {
 	sort.Ints(right_arr)
 
 	// calculate sum of differences
-	total := 0
-	for i := range left_arr {
-		diff := left_arr[i] - right_arr[i]
+	return sumOfDifferences(left_arr, right_arr)
+}
 
-		if diff < 0 {
-			diff *= -1
-		}
-
-		total += diff
-	}
-
-	fmt.Println("Total:", total)
+func main() {
+	// Puzzle 1
+	total_distance := calcTotalDistance()
+	fmt.Println("Total:", total_distance)
 }

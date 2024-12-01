@@ -1,3 +1,3 @@
-module github.com/shwaygrr/aod
+module github.com/shwaygrr/aoc
 
 go 1.23.2
