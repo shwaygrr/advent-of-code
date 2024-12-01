@@ -45,12 +45,12 @@ func main() {
 	}
 
 	//sort splices
-	sort.Ints(left_arr[:])
-	sort.Ints(right_arr[:])
+	sort.Ints(left_arr)
+	sort.Ints(right_arr)
 
 	// calculate sum of differences
 	total := 0
-	for i, _ := range left_arr {
+	for i := range left_arr {
 		diff := left_arr[i] - right_arr[i]
 
 		if diff < 0 {
