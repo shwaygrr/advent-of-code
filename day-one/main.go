@@ -42,7 +42,12 @@ func getListFromFile(file_name string) ([]int, []int) {
 	return left_arr, right_arr
 }
 
-func sumOfDifferences(arr1 []int, arr2 []int) int {
+func calcTotalDistance(arr1, arr2 []int) int {
+	//sort splices
+	sort.Ints(arr1)
+	sort.Ints(arr2)
+
+	// calculate sum of differences
 	total := 0
 	for i := range arr1 {
 		diff := arr1[i] - arr2[i]
@@ -56,23 +61,32 @@ func sumOfDifferences(arr1 []int, arr2 []int) int {
 	return total
 }
 
-func calcTotalDistance() int {
+func calcSimilarityScore(left_arr, right_arr []int) int {
+	right_freq_map := make(map[int]int)
 
-	left_arr, right_arr := getListFromFile("input.txt")
+	for _, num := range right_arr {
+		right_freq_map[num]++
+	}
 
-	//sort splices
-	sort.Ints(left_arr)
-	sort.Ints(right_arr)
+	result := 0
 
-	// calculate sum of differences
-	return sumOfDifferences(left_arr, right_arr)
+	for _, id := range left_arr {
+		result += id * right_freq_map[id]
+	}
+
+	return result
 }
 
 func main() {
+
+	left_arr, right_arr := getListFromFile("input.txt")
+
 	// puzzle 1
-	total_distance := calcTotalDistance()
+
+	total_distance := calcTotalDistance(left_arr, right_arr)
 	fmt.Println("Total:", total_distance)
 
 	// puzzle 2
-
+	similarity_score := calcSimilarityScore(left_arr, right_arr)
+	fmt.Println("Similarity Score:", similarity_score)
 }
