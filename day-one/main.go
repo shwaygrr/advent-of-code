@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func getListFromFile(file_name string) ([]int, []int) {
+func getListsFromFile(file_name string) ([]int, []int) {
 	var left_arr []int
 	var right_arr []int
 
@@ -19,11 +19,11 @@ func getListFromFile(file_name string) ([]int, []int) {
 	}
 
 	// fmt.Printf("%q", data)
-	data_arr := strings.Split(string(data), "\r\n")
+	lines := strings.Split(string(data), "\r\n")
 
 	// assign values
-	for _, pair := range data_arr {
-		pair_tuple := strings.Split(pair, "   ")
+	for _, line := range lines {
+		pair_tuple := strings.Split(line, "   ")
 
 		left_item, left_err := strconv.Atoi(pair_tuple[0])
 		if left_err != nil {
@@ -78,15 +78,13 @@ func calcSimilarityScore(left_arr, right_arr []int) int {
 }
 
 func main() {
+	left_arr, right_arr := getListsFromFile("input.txt")
 
-	left_arr, right_arr := getListFromFile("input.txt")
-
-	// puzzle 1
-
+	// part 1
 	total_distance := calcTotalDistance(left_arr, right_arr)
 	fmt.Println("Total:", total_distance)
 
-	// puzzle 2
+	// part 2
 	similarity_score := calcSimilarityScore(left_arr, right_arr)
 	fmt.Println("Similarity Score:", similarity_score)
 }
