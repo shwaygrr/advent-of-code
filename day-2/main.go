@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func convertDataToreport(file_name string) [1000][]int {
+func convertDataToReport(file_name string) [1000][]int {
 	var data_report [1000][]int
 
 	data, err := os.ReadFile(file_name)
@@ -122,7 +122,7 @@ func countIsSafeWithDampener(reports [1000][]int) int {
 }
 
 func main() {
-	reports := convertDataToreport("input.txt")
+	reports := convertDataToReport("input.txt")
 
 	// part 1
 	safe_report_count := countSafeReports(reports)

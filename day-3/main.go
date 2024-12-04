@@ -16,13 +16,12 @@ func getMemoryString(file_name string) string {
 
 	return string(memory)
 }
-func scanandMult(memory string) int {
+
+func scanAndMult(memory string) int {
+	result := 0
+
 	re := regexp.MustCompile(`mul\([0-9]{1,3},[0-9]{1,3}\)`)
 	valid_sequences := re.FindAllString(memory, -1)
-
-	fmt.Println(valid_sequences)
-
-	result := 0
 
 	re_nums := regexp.MustCompile(`[0-9]{1,3}`)
 
@@ -38,12 +37,48 @@ func scanandMult(memory string) int {
 	return result
 }
 
+func splitConditionals(memory string) []string {
+	re := regexp.MustCompile(`do(n't)?\(\)`)
+
+	conds_indexes := re.FindAllStringIndex(memory, -1)
+
+	var split_memory []string
+
+	i := 0
+
+	for _, index_range := range conds_indexes {
+
+		split_memory = append(split_memory, memory[i:index_range[0]])
+		i = index_range[0]
+	}
+
+	split_memory = append(split_memory, memory[i:])
+
+	return split_memory
+}
+
+func scanAndMultWithConditionals(memory string) int {
+	result := 0
+
+	split_conditionals := splitConditionals(memory)
+
+	for _, conditional := range split_conditionals {
+		if conditional[:7] != "don't()" {
+			result += scanAndMult(conditional)
+		}
+	}
+
+	return result
+}
+
 func main() {
 	memory := getMemoryString("input.txt")
 
 	// part 1
-	uncorrupts_sum := scanandMult(memory)
-	fmt.Println(uncorrupts_sum)
+	uncorrupts_sum := scanAndMult(memory)
+	fmt.Println("Multiplications sum:", uncorrupts_sum)
 
 	//part 2
+	uncorrupts_sum_with_conditionals := scanAndMultWithConditionals(memory)
+	fmt.Println("Multiplications with condtionals sum:", uncorrupts_sum_with_conditionals)
 }
