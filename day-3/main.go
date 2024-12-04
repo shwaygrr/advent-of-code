@@ -45,5 +45,5 @@ func main() {
 	uncorrupts_sum := scanandMult(memory)
 	fmt.Println(uncorrupts_sum)
 
-	//poart 2
+	//part 2
 }
